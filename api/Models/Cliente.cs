@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿//importamos DataAnnotations
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApp.Models
         

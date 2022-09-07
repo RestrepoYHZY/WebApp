@@ -1,23 +1,36 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿//importamos EntityFrameworkCore desde nuget
+using Microsoft.EntityFrameworkCore;
+
+//importamos la carpeta Models
 using WebApp.Models;
 
 namespace WebApp.Context
 
     
 {
+    //heredamos  DbContext
     public class AppDbContext:DbContext
     {
         
-        //llamar el modelo
+            
 
         public AppDbContext(DbContextOptions<AppDbContext>options):base(options)
         {
 
         }
-        //importamos la clase Cliente de la carpeta Models 
-        //representacion la tabla cliente sql
-        //get para consultar  set para modificar 
+        
+        //representamos las tablas  sql
         public DbSet<Cliente> cliente { get; set; }
+
+        public DbSet<Pedido> pedido { get; set; }
+        
+        public DbSet<Producto> produto { get; set; }
+
+        public DbSet<Proveedor> proveedor { get; set; }
+
+        public DbSet<Detalle_venta>detalle_Venta { get; set; } 
+
+
 
     }
 }

@@ -1,24 +1,20 @@
-﻿//EntityFrameworkCore importamos desde nuget
+﻿//administrar paquetes nuget e instalamos Entity
 using Microsoft.EntityFrameworkCore;
-
-//importamos la carpeta Context
 using WebApp.Context;
 
 namespace WebApp.Configurations
 {
-    //conectamos con la cadena de conexion .json
+    //configurando conexion con la base de datos 
     public static class DataBaseConfigurations
-    {
-        //metodo statico
+    {   
         public static IServiceCollection DataBaseConfiguration(this IServiceCollection builder)
         {
-            //optenemos cadena de conexion 
+            //cadena de conexion 
             builder.AddDbContext<AppDbContext>(
-            options => options.UseSqlServer(Environment.GetEnvironmentVariable("CONNECTION_STRING")));
-
-
+            options => options.UseSqlServer("data source=DUBAN;initial catalog=gestionPedidos; user id=sa; password=123;MultipleActiveResultSets=true")
+             );
             return builder;
         }
-
+        
     }
 }

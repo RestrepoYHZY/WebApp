@@ -10,11 +10,11 @@ namespace WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GestoresProductoController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly AppDbContext context;
 
-        public GestoresProductoController(AppDbContext context)
+        public ProductController(AppDbContext context)
         {
             this.context = context;
 
@@ -30,7 +30,7 @@ namespace WebApp.Controllers
             {
 
 
-                return Ok(context.produto.ToList());
+                return Ok(context.product.ToList());
 
             } catch (Exception e)
             {
@@ -45,7 +45,7 @@ namespace WebApp.Controllers
             try
             {
 
-                var gestor = context.produto.FirstOrDefault(x => x.Id == id);
+                var gestor = context.product.FirstOrDefault(x => x.idProduct == id);
 
                 return Ok(gestor);
 
@@ -58,14 +58,14 @@ namespace WebApp.Controllers
 
         // POST api/<GestoresProductoController>
         [HttpPost]
-        public ActionResult Post([FromBody] Producto gestor)
+        public ActionResult Post([FromBody] Product gestor)
         {
             try
             {
-                context.produto.Add(gestor);
+                context.product.Add(gestor);
                 context.SaveChanges();
 
-                return CreatedAtRoute("getProducto",new { id=gestor.Id});
+                return CreatedAtRoute("getProducto",new { id=gestor.idProduct},gestor);
 
                 
 
@@ -79,16 +79,16 @@ namespace WebApp.Controllers
 
         // PUT api/<GestoresProductoController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Producto gestor)
+        public ActionResult Put(int id, [FromBody] Product gestor)
         {
             try
             {
 
-                if(gestor.Id==id)
+                if(gestor.idProduct==id)
                 context.Entry(gestor).State=EntityState.Modified;
                 context.SaveChanges();
 
-                return CreatedAtRoute("getProducto", new { id=gestor.Id},gestor);  
+                return CreatedAtRoute("getProducto", new { id=gestor.idProduct},gestor);  
                 
 
 
@@ -106,11 +106,11 @@ namespace WebApp.Controllers
             try
             {
 
-                var gestor = context.produto.FirstOrDefault(x => x.Id == id);
+                var gestor = context.product.FirstOrDefault(x => x.idProduct == id);
 
                 if (gestor != null)
                 {
-                    context.produto.Remove(gestor);
+                    context.product.Remove(gestor);
                     context.SaveChanges();
                     return Ok(id);
                 }

@@ -20,15 +20,15 @@ namespace WebApp.Context
         }
         
         //representamos las tablas  sql
-        public DbSet<Cliente> cliente { get; set; }
+        public DbSet<Customer> customer { get; set; }
 
-        public DbSet<Pedido> pedido { get; set; }
+        public DbSet<Sale> sale { get; set; }
         
-        public DbSet<Producto> produto { get; set; }
+        public DbSet<Product> product { get; set; }
 
-        public DbSet<Proveedor> proveedor { get; set; }
+        public DbSet<Provider> provider { get; set; }
 
-        public DbSet<Detalle_venta>detalle_Venta { get; set; } 
+        public DbSet<SaleDetail> saleDetail { get; set; } 
 
 
 

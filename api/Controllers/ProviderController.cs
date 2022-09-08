@@ -9,12 +9,12 @@ namespace WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GestoresProveedorController : ControllerBase
+    public class ProviderController : ControllerBase
     {
 
         private readonly AppDbContext context;
 
-        public GestoresProveedorController(AppDbContext context)
+        public ProviderController(AppDbContext context)
         {
             this.context = context;
         }
@@ -27,7 +27,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                return Ok(context.proveedor.ToList());
+                return Ok(context.provider.ToList());
 
             }catch (Exception e)
             {
@@ -42,7 +42,7 @@ namespace WebApp.Controllers
             try
             {
 
-                var gestor=context.proveedor.FirstOrDefault(x=>x.Id == id);
+                var gestor=context.provider.FirstOrDefault(x=>x.idProvider == id);
 
                 return Ok(gestor);  
 
@@ -55,13 +55,13 @@ namespace WebApp.Controllers
 
         // POST api/<GestoresProveedorController>
         [HttpPost]
-        public ActionResult   Post([FromBody] Proveedor gestor)
+        public ActionResult   Post([FromBody] Provider gestor)
         {
             try
             {
                 context.Add(gestor);
                 context.SaveChanges();
-                return CreatedAtRoute("getProveedro",new { id = gestor.Id },gestor);   
+                return CreatedAtRoute("getProveedro",new { id = gestor.idProvider },gestor);   
 
 
 
@@ -73,15 +73,15 @@ namespace WebApp.Controllers
 
         // PUT api/<GestoresProveedorController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Proveedor gestor)
+        public ActionResult Put(int id, [FromBody] Provider gestor)
         {
             try
             {
-               if(gestor.Id == id)
+               if(gestor.idProvider == id)
 
                 context.Entry(gestor).State = EntityState.Modified;
                 context.SaveChanges();
-                return CreatedAtRoute("getProveedor", new { id = gestor.Id },gestor);
+                return CreatedAtRoute("getProveedor", new { id = gestor.idProvider },gestor);
                 
 
 
@@ -97,7 +97,7 @@ namespace WebApp.Controllers
         {
             try
             {
-                var gestor=context.proveedor.FirstOrDefault(x => x.Id == id);
+                var gestor=context.provider.FirstOrDefault(x => x.idProvider == id);
                 if (gestor != null)
                      context.Remove(gestor);
                      context.SaveChanges();

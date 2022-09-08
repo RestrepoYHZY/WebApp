@@ -2,10 +2,10 @@
 
 namespace WebApp.Models
 {
-    public class Proveedor
+    public class Provider
     {
         [Key]
-        public int Id { get; set; }
+        public int idProvider { get; set; }
 
         public string provider_name { get; set; }   
 

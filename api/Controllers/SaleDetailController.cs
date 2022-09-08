@@ -9,11 +9,11 @@ namespace WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GestorDetalleController : ControllerBase
+    public class SaleDetailController : ControllerBase
     {
         private readonly AppDbContext context;
 
-        public GestorDetalleController(AppDbContext context)
+        public SaleDetailController(AppDbContext context)
         {
             this.context = context;
         }
@@ -26,7 +26,7 @@ namespace WebApp.Controllers
             try
             {
                 
-                return Ok(context.detalle_Venta.ToList());
+                return Ok(context.saleDetail.ToList());
 
             }catch(Exception e)
             {
@@ -41,7 +41,7 @@ namespace WebApp.Controllers
             try
             {
 
-                var gestor = context.detalle_Venta.FirstOrDefault(x => x.Id == id);
+                var gestor = context.saleDetail.FirstOrDefault(x => x.idDetail == id);
                 return Ok(gestor);
 
 
@@ -54,24 +54,24 @@ namespace WebApp.Controllers
 
         // POST api/<GestorDetalleController>
         [HttpPost]
-        public ActionResult Post([FromBody] Detalle_venta gestor)
+        public ActionResult Post([FromBody] SaleDetail gestor)
         {
-            context.detalle_Venta.Add(gestor);    
+            context.saleDetail.Add(gestor);    
             context.SaveChanges();
-            return CreatedAtRoute("getDetalle", new {id=gestor.Id},gestor);
+            return CreatedAtRoute("getDetalle", new {id=gestor.idDetail},gestor);
 
         }
 
         // PUT api/<GestorDetalleController>/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Detalle_venta gestor)
+        public ActionResult Put(int id, [FromBody] SaleDetail gestor)
         {
             try
             {
-                if (gestor.Id == id)
+                if (gestor.idDetail == id)
                      context.Entry(gestor).State = EntityState.Modified;
                      context.SaveChanges();
-                     return CreatedAtRoute("getDetalle", new { id = gestor.Id }, gestor);
+                     return CreatedAtRoute("getDetalle", new { id = gestor.idDetail }, gestor);
 
 
             }catch(Exception e)
@@ -89,12 +89,12 @@ namespace WebApp.Controllers
             try
             {
                 
-                var gestor = context.detalle_Venta.FirstOrDefault(x => x.Id == id);
+                var gestor = context.saleDetail.FirstOrDefault(x => x.idDetail == id);
 
                 
                 if (gestor != null)
                 {
-                    context.detalle_Venta.Remove(gestor);
+                    context.saleDetail.Remove(gestor);
                     context.SaveChanges();
                     return Ok(id);
                 }

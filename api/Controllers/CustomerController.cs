@@ -29,7 +29,7 @@ namespace WebApp.Controllers
 
         //peticion get 
         //optenemos toda la informacion de la tabla cliente sql
-        public ActionResult<string> Get()
+        public ActionResult Get()
         {
             //manejo de errores 
             try
@@ -46,7 +46,7 @@ namespace WebApp.Controllers
         }
 
         // GET api/<GestoresController>/5
-        [HttpGet("{id}",Name ="getCliente")]
+        [HttpGet("{id}",Name ="getCustomer")]
 
         //retorna un solo registro de  la tabla cliente sql
         public ActionResult Get(int id)
@@ -83,7 +83,7 @@ namespace WebApp.Controllers
                 context.SaveChanges();
 
                 //retornamos al usuario lo que se inserto y el ID autoincrementable 
-                return CreatedAtRoute("getCliente", new { id = gestor.idCustomer }, gestor);
+                return CreatedAtRoute("getCustomer", new { id = gestor.idCustomer }, gestor);
 
             }catch(Exception e)
             {
@@ -110,7 +110,7 @@ namespace WebApp.Controllers
                 context.SaveChanges();
 
                 //retornamos al cliente los cambios  
-                return CreatedAtRoute("getCliente", new { id = gestor.idCustomer}, gestor);
+                return CreatedAtRoute("getCustomer", new { id = gestor.idCustomer}, gestor);
 
             }
             catch (Exception e)

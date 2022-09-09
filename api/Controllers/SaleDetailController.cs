@@ -35,7 +35,7 @@ namespace WebApp.Controllers
         }
 
         // GET api/<GestorDetalleController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}",Name ="getDetail")]
         public ActionResult Get(int id)
         {
             try
@@ -58,7 +58,7 @@ namespace WebApp.Controllers
         {
             context.saleDetail.Add(gestor);    
             context.SaveChanges();
-            return CreatedAtRoute("getDetalle", new {id=gestor.idDetail},gestor);
+            return CreatedAtRoute("getDetail", new {id=gestor.idDetail},gestor);
 
         }
 
@@ -71,7 +71,7 @@ namespace WebApp.Controllers
                 if (gestor.idDetail == id)
                      context.Entry(gestor).State = EntityState.Modified;
                      context.SaveChanges();
-                     return CreatedAtRoute("getDetalle", new { id = gestor.idDetail }, gestor);
+                     return CreatedAtRoute("getDetail", new { id = gestor.idDetail }, gestor);
 
 
             }catch(Exception e)

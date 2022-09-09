@@ -22,7 +22,7 @@ namespace WebApp.Controllers
         [HttpGet]
 
 
-        public ActionResult<string> Get()
+        public ActionResult  Get()
         {
             try
             {
@@ -36,7 +36,7 @@ namespace WebApp.Controllers
         }
 
         // GET api/<GestoresPedidoController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}",Name ="getSale")]
         public ActionResult Get(int id)
         {
             try
@@ -60,7 +60,7 @@ namespace WebApp.Controllers
                 context.sale.Add(gestor);
                 context.SaveChanges();
 
-                return CreatedAtRoute("getPedido",new { id = gestor.idSale },gestor);
+                return CreatedAtRoute("getSale",new { id = gestor.idSale },gestor);
 
             }catch(Exception e)
             {
@@ -80,7 +80,7 @@ namespace WebApp.Controllers
                 context.Entry(gestor).State=EntityState.Modified;
                 context.SaveChanges();
 
-                return CreatedAtRoute("getPedido", new { id = gestor.idSale }, gestor);
+                return CreatedAtRoute("getSale", new { id = gestor.idSale }, gestor);
 
 
             }

@@ -36,7 +36,7 @@ namespace WebApp.Controllers
         }
 
         // GET api/<GestoresProveedorController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}",Name ="getProvider")]
         public ActionResult Get(int id)
         {
             try
@@ -61,7 +61,7 @@ namespace WebApp.Controllers
             {
                 context.Add(gestor);
                 context.SaveChanges();
-                return CreatedAtRoute("getProveedro",new { id = gestor.idProvider },gestor);   
+                return CreatedAtRoute("getProvider",new { id = gestor.idProvider },gestor);   
 
 
 
@@ -81,7 +81,7 @@ namespace WebApp.Controllers
 
                 context.Entry(gestor).State = EntityState.Modified;
                 context.SaveChanges();
-                return CreatedAtRoute("getProveedor", new { id = gestor.idProvider },gestor);
+                return CreatedAtRoute("getProvider", new { id = gestor.idProvider },gestor);
                 
 
 

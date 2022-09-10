@@ -10,13 +10,15 @@ namespace WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GestoresController : ControllerBase
+    public class CustomerController : ControllerBase
         
     {
-        //importamos AppContext
+        //declaramos context de tipo AppDbContext 
         private readonly AppDbContext context;
 
-        public GestoresController(AppDbContext context)
+
+        //constructor 
+        public CustomerController(AppDbContext context)
         {
             this.context = context;
         }
@@ -26,13 +28,14 @@ namespace WebApp.Controllers
         [HttpGet]
 
         //peticion get 
-        public ActionResult<string> Get()
+        //optenemos toda la informacion de la tabla cliente sql
+        public ActionResult Get()
         {
             //manejo de errores 
             try
             {
-                //optenemos toda la informacion de la tabla cliente sql
-                return Ok(context.cliente.ToList());
+                
+                return Ok(context.customer.ToList());
 
             }catch(Exception e)
             {
@@ -43,7 +46,7 @@ namespace WebApp.Controllers
         }
 
         // GET api/<GestoresController>/5
-        [HttpGet("{id}",Name ="getCliente")]
+        [HttpGet("{id}",Name ="getCustomer")]
 
         //retorna un solo registro de  la tabla cliente sql
         public ActionResult Get(int id)
@@ -52,11 +55,11 @@ namespace WebApp.Controllers
             try
             {
                 //uso del LINQ
-                //busca dentro de los  registros la  coicidencia del  id que nos manda el usuario
+                //acemos coincidir el ID que nos manda el usuario con los registros de la tabla cliente sql
                 
-                var gestor=context.cliente.FirstOrDefault(x => x.Id == id); 
+                var gestor=context.customer.FirstOrDefault(x => x.idCustomer == id); 
 
-                //retorna el id
+                //retorna el ID
                 return Ok(gestor);  
 
             }catch(Exception e)
@@ -69,15 +72,18 @@ namespace WebApp.Controllers
         [HttpPost]
 
         //le pasamos por parametro la clase Cliente de la carpeta Model al metodo post
-        public ActionResult Post([FromBody] Cliente gestor)
+        public ActionResult Post([FromBody] Customer gestor)
         {
             try
             {
-                //insertamos el registro dentro de la base da datos 
-                context.cliente.Add(gestor);
+                //insertamos el registro dentro dentro de la tabla cliente sql
+                context.customer.Add(gestor);
+
+                //guarda los cambios 
                 context.SaveChanges();
-                //retornamos al usuario lo que se inserto y el id autoincrementable 
-                return CreatedAtRoute("getCliente", new { id = gestor.Id }, gestor);
+
+                //retornamos al usuario lo que se inserto y el ID autoincrementable 
+                return CreatedAtRoute("getCustomer", new { id = gestor.idCustomer }, gestor);
 
             }catch(Exception e)
             {
@@ -87,21 +93,24 @@ namespace WebApp.Controllers
 
         // PUT api/<GestoresController>/5
         [HttpPut("{id}")]
-        
+     
        
-        public ActionResult Put(int id, [FromBody] Cliente gestor)
+        public ActionResult Put(int id, [FromBody] Customer gestor)
         {
             try
             {
-                //buscamos por id el registro que queremos modificar 
+                //si la condicion es cierta retornamos los cambios 
 
-                if (gestor.Id==id)
+                if (gestor.idCustomer==id)
+
                 //modificamos los cambios 
                 context.Entry(gestor).State = EntityState.Modified;
+
                 //guardamos los cambios 
                 context.SaveChanges();
-                //retornamos al cliente 
-                return CreatedAtRoute("getCliente", new { id = gestor.Id }, gestor);
+
+                //retornamos al cliente los cambios  
+                return CreatedAtRoute("getCustomer", new { id = gestor.idCustomer}, gestor);
 
             }
             catch (Exception e)
@@ -119,12 +128,12 @@ namespace WebApp.Controllers
             try
             {
                 //buscamos que el registro exista  
-                var gestor = context.cliente.FirstOrDefault(x => x.Id==id);
+                var gestor = context.customer.FirstOrDefault(x => x.idCustomer==id);
 
-                //en caso de que exista 
+                //en caso de que exista
                 if (gestor != null)
                 {
-                    context.cliente.Remove(gestor); 
+                    context.customer.Remove(gestor); 
                     context.SaveChanges();
                     return Ok(id);
                 }

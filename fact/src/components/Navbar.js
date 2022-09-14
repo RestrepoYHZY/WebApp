@@ -1,38 +1,61 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/dist/collapse';
+import 'bootstrap/js/dist/dropdown';
 
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 const Navbar = () => {
   return (
-<nav class="navbar navbar-expand-lg bg-info ">
-        <div class="container-fluid ms-3">
-            <ul class="navbar-nav">
-            <Link  to="/" className="nav-link fw-semibold fs-5">Inicio</Link>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+<div className="container-fluid">
+<a className="navbar-brand ms-3" to="#">WebApp</a>
+<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#opciones">
+      <span className="navbar-toggler-icon"></span>
+    </button>
+        <div className="collapse navbar-collapse ms-3 " id="opciones">
+            
+            <ul className="navbar-nav ms-auto">
+            <Link  to="/" className="nav-link fw-normal fs-5">Home</Link>
                    
-            <li class="nav-item ms-2">
-                <Link  to="/Ventas" className="nav-link fw-semibold fs-5">Ventas</Link>
+            <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle fw-normal fs-5" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                 Sale
+                 </a>
+                <ul className="dropdown-menu">
+                     <li><Link className="dropdown-item fw-normal fs-5" to="/Ventas">New Sale</Link></li>
+                    <li><Link className="dropdown-item fw-normal fs-5" to="/ListVentas">Sales List </Link></li>
+                 </ul>
             </li>
 
-            <li class="nav-item ms-2">
-                <Link to="/Productos"className="nav-link fw-semibold fs-5">Productos</Link>
+
+            <li className="nav-item ms-2">
+                <Link to="/Productos"className="nav-link fw-normal fs-5">Products</Link>
             </li>
 
-            <li class="nav-item ms-2">
-                <Link  to="/CLientes" className="nav-link fw-semibold fs-5"> Clientes </Link>
+            <li className="nav-item ms-2">
+                <Link  to="/Clientes" className="nav-link fw-normal fs-5"> Clients </Link>
             </li>
                 
-            <li class="nav-item ms-2">
-                <Link  to="/Proveedores" className="nav-link fw-semibold fs-5"> Proveedores </Link>
+            <li className="nav-item ms-2">
+                <Link  to="/Proveedores" className="nav-link fw-normal fs-5"> Providers </Link>
+            </li>
+            <li className="nav-item ms-2">
+                <Link  to="/" className=" btn btn-small btn-primary nav-link fw-normal fs-5"> Inicia </Link>
             </li>
             </ul>
-            <form class="d-flex me-5">
-        <button class="btn btn-light my-2 my-sm-0" type="submit">Search</button>
-      </form>
-        </div>
+            
+        
+            
+      </div>
+       
+      </div>  
     </nav>
 
 )
 }
+
+
 
 export default Navbar
 

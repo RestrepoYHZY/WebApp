@@ -34,6 +34,7 @@ const Proveedores = () => {
     await axios.get(baseUrl)
     .then(response=>{
       setData(response.data)
+console.table(response.data);
     }).catch(error=>{
       console.log(error);
     })
@@ -73,9 +74,11 @@ const Proveedores = () => {
     await axios.delete(baseUrl+"/"+proveedorSeleccionado.idProvider)
     .then(response=>{
       setData(data.filter(provider=>provider.idProvider!==response.data));
+      
       abrirCerrarModalEliminar();
     }).catch(error=>{
       console.log(error);
+      
     })
   }
 
@@ -117,7 +120,7 @@ const Proveedores = () => {
                    <th scope="col">Id Provider</th>
                     <th scope="col">Name Provider</th>
                     <th scope="col">Nit</th>
-                    <th scope="col">PhoneNumber</th>
+                    <th scope="col">Phone Number</th>
                     <th scope="col">Address</th>
                     <th scope="col">Action</th>
                   </tr>
@@ -135,7 +138,7 @@ const Proveedores = () => {
                       <button className="btn btn-small btn-primary me-1" onClick={()=>seleccionarproveedor(provider,"Editar")}>
                         <FaPen/>
                       </button>
-                      <button className="btn btn-small btn-danger" onClick={()=>abrirCerrarModalEliminar(provider, "Eliminar")}>
+                      <button className="btn btn-small btn-danger" onClick={()=>seleccionarproveedor(provider,"eliminar")}>
                         <FaTrashAlt />
                       </button>
                       </td>
@@ -217,10 +220,10 @@ const Proveedores = () => {
 {/* MODAL Eliminar */}
  <Modal isOpen={modalEliminar} backdrop={false}>
         <ModalBody>
-            Are you sure you want to delete the provider {proveedorSeleccionado && proveedorSeleccionado.provider_name}? 
+            Are you sure you want to delete the selected provider "{proveedorSeleccionado && proveedorSeleccionado.provider_name}"? 
         </ModalBody>
         <ModalFooter>
-            <button className="btn btn-danger" onClick={()=>peticionDelete()}>Yes</button>
+            <button className="btn btn-danger" onClick={()=>peticionDelete() }>Yes</button>
             <button className="btn btn-secondary" onClick={()=>abrirCerrarModalEliminar()}>No</button>
         </ModalFooter>
     </Modal>   

@@ -52,10 +52,19 @@ await axios.get(Url)
 })
 }
 
+ const peticionPost=async()=>{
+    delete CustomerSeleccionado.idCustomer;
+    await axios.post(Url, CustomerSeleccionado)
+    .then(response=>{
+      setData(data.concat(response.data));
+      abrirCerrarModalInsertar();
+    }).catch(error=>{
+      console.log(error);
+    })
+  }
 
 const peticionPut = async ()=>{
-  CustomerSeleccionado.document=parseInt(CustomerSeleccionado.document);
-  CustomerSeleccionado.phoneNumber=parseInt(CustomerSeleccionado.phoneNumber);
+  
   await axios.put(Url + "/" + CustomerSeleccionado.idCustomer, CustomerSeleccionado)
   .then(response=>{
       var respuesta = response.data;
@@ -161,7 +170,7 @@ useEffect(()=>{
                 </div>
     </ModalBody>
     <ModalFooter>
-        <button className="btn btn-primary" onClick={()=>peticionPut()}>New</button>{" "}
+        <button className="btn btn-primary" onClick={()=>peticionPost()}>New</button>{" "}
         <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancel</button>
     </ModalFooter>
     </Modal>

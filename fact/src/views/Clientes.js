@@ -10,7 +10,7 @@ const [data, setData]=useState([]);
 const [modalInsertar, setModalInsertar]=useState(false);
 const [modalEliminar , setModalEliminar]=useState(false);
 const [modalEditar, setModalEditar]=useState(false);
-const [CustomerSeleccionado, setCustomerSeleccionado]=useState({
+const [customerSeleccionado, setcustomerSeleccionado]=useState({
  idCustomer: '',
  name: '',
  surname: '',
@@ -22,11 +22,11 @@ const [CustomerSeleccionado, setCustomerSeleccionado]=useState({
 
 const handleChange=e=>{
     const {name, value}=e.target;
-    setCustomerSeleccionado({
-        ...CustomerSeleccionado,
+    setcustomerSeleccionado({
+        ...customerSeleccionado,
         [name]: value
     });
-    console.log(CustomerSeleccionado);
+    console.log(customerSeleccionado);
 }
 
 
@@ -53,8 +53,8 @@ await axios.get(Url)
 }
 
  const peticionPost=async()=>{
-    delete CustomerSeleccionado.idCustomer;
-    await axios.post(Url, CustomerSeleccionado)
+    delete customerSeleccionado.idCustomer;
+    await axios.post(Url, customerSeleccionado)
     .then(response=>{
       setData(data.concat(response.data));
       abrirCerrarModalInsertar();
@@ -65,12 +65,12 @@ await axios.get(Url)
 
 const peticionPut = async ()=>{
   
-  await axios.put(Url + "/" + CustomerSeleccionado.idCustomer, CustomerSeleccionado)
+  await axios.put(Url + "/" + customerSeleccionado.idCustomer, customerSeleccionado)
   .then(response=>{
       var respuesta = response.data;
       var dataAuxiliar = data;
       dataAuxiliar.map(Customer=>{
-          if (Customer.idCustomer === CustomerSeleccionado.idCustomer) {
+          if (Customer.idCustomer === customerSeleccionado.idCustomer) {
               Customer.name = respuesta.name;
               Customer.surname = respuesta.surname;
               Customer.document = respuesta.document;
@@ -85,8 +85,19 @@ const peticionPut = async ()=>{
       console.log(error);
   })
   }
-const seleccionarcustomer=(Customer, caso)=>{
-    setCustomerSeleccionado(Customer);
+
+  
+  const peticionDelete=async()=>{
+    await axios.delete(Url+"/"+ customerSeleccionado.idCustomer)
+    .then(response=>{
+      setData(data.filter(Customer=>Customer.idCustomer!==response.data));
+      abrirCerrarModalEliminar();
+    }).catch(error=>{
+      console.log(error);
+    })
+  }
+const seleccionarCustomer=(Customer, caso)=>{
+    setcustomerSeleccionado(Customer);
     (caso === "Editar")?
     abrirCerrarModalEditar(): abrirCerrarModalEliminar();
 }
@@ -106,13 +117,13 @@ useEffect(()=>{
                <table className="table table table-striped table-hover">
                  <thead>
                     <tr>
-                       <th scope="col">idCustomer</th>
+                       <th scope="col">id Customer</th>
                         <th scope="col">Name</th>
                         <th scope="col">Surname</th>
-                        <th scope="col">document</th>
+                        <th scope="col">Document</th>
                         <th scope="col">Phone Number</th>
                         <th scope="col">Mail</th>
-                        <th scope="col">Acción</th>
+                        <th scope="col">Action</th>
                       </tr>
                     </thead>
     
@@ -126,10 +137,10 @@ useEffect(()=>{
                          <td>{Customer.phoneNumber}</td>
                          <td>{Customer.mail}</td>
                           <td>
-                          <button className="btn btn-small btn-primary me-1" onClick={()=>seleccionarcustomer(Customer,"Editar")}>
+                          <button className="btn btn-small btn-primary me-1" onClick={()=>seleccionarCustomer(Customer,"Editar")}>
                             <FaPen/>
                           </button>
-                          <button className="btn btn-small btn-danger" onClick={()=>abrirCerrarModalEliminar(Customer, "Eliminar")}>
+                          <button className="btn btn-small btn-danger" onClick={()=>seleccionarCustomer(Customer, "Eliminar")}>
                             <FaTrashAlt />
                           </button>
                           </td>
@@ -176,12 +187,61 @@ useEffect(()=>{
     </Modal>
     
     </div>
-                 
-    
+       
+{/* MODAL EDITAR */}
+
+ <Modal isOpen={modalEditar} backdrop={false} >
+<ModalHeader>Edit Customers</ModalHeader>
+<ModalBody>
+<div className="form-group">
+                    <label>Id Customer:</label>
+                    <br />
+                    <input type="text" className="form-control" name="idCustomer" readOnly onChange={handleChange} value={ customerSeleccionado && customerSeleccionado.idCustomer} />
+                    <br />
+                    <label>Name:</label>
+                    <br />
+                    <input type="text" className="form-control" name="name"   onChange={handleChange}  value={ customerSeleccionado && customerSeleccionado.name}  />
+                    <br />
+                    <label>Surname:</label>
+                    <br />
+                    <input type="text" className="form-control" name="surname" onChange={handleChange}  value={ customerSeleccionado && customerSeleccionado.surname}/>
+                    <br />
+                    <label>Document:</label>
+                    <br />
+                    <input type="numeric" className="form-control" name="document"  onChange={handleChange}  value={ customerSeleccionado && customerSeleccionado.document}/>
+                    <br />
+                    <label>Phone Number:</label>
+                    <br />
+                    <input type="tel" className="form-control" name="phoneNumber"  onChange={handleChange}  value={ customerSeleccionado && customerSeleccionado.phoneNumber}/>
+                    <br />
+                    <label>Mail:</label>
+                    <br />
+                    <input type="email" className="form-control" name="mail" onChange={handleChange}  value={ customerSeleccionado && customerSeleccionado.mail}/>
+                    <br />
+                    
+                </div>
+</ModalBody>
+<ModalFooter>
+    <button className="btn btn-primary" onClick={()=>peticionPut()}>Edit Customer</button>{" "}
+    <button className="btn btn-danger" onClick={()=>abrirCerrarModalEditar()}>Cancel</button>
+</ModalFooter>
+</Modal> 
+ 
+ 
+{/* MODAL Eliminar */}
+<Modal isOpen={modalEliminar} backdrop={false}>
+        <ModalBody>
+        Are you sure you want to delete the selected Customer "{customerSeleccionado && customerSeleccionado.name}"?  
+        </ModalBody>
+        <ModalFooter>
+            <button className="btn btn-danger" onClick={()=>peticionDelete()}>Yes</button>
+            <button className="btn btn-secondary" onClick={()=>abrirCerrarModalEliminar()}>No</button>
+        </ModalFooter>
+    </Modal>   
             </div>
         </div>    
       </div>
     </div>
              );
 } 
-export default Clientes
+export default Clientes;

@@ -1,6 +1,8 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaTrashAlt} from "react-icons/fa";
+import SearchCliente from "../components/SearchCliente";
+import SearchProduct from "../components/SearchProduct";
 
 const Ventas = () => {
   return (
@@ -10,33 +12,17 @@ const Ventas = () => {
          <div className='containerLeftC col-5 '>
 
               {/* PARA EL CLIENTE*/}
-            <div className="card border-primary">
+              <div className="card border-primary">
                   <div className="card-header border-primary  fw-semibold fs-5">Clients</div>
                     <div className="card-body">
 
-                    <form>
-                    <div className="row mb-3">
-                      <label  className="col-sm-3 col-form-label ">ID Client</label>
-                        <div className="col-sm-9">
-                          <input type="numeric" className="form-control" />
-                        </div>
-                    </div>
-
-                    <div className="row mb-3 ">
-                      <label className="col-sm-3 col-form-label ">Name Client</label>
-                        <div className="col-sm-9">
-                          <input type="text" className="form-control" readOnly />
-                        </div>
-                    </div>
-
-                    </form>
+                        <SearchCliente/>
                         </div>
 
                         <div className="card-footer border-primary bg-light fw-semibold fs-5 p-3">
                            <button className="btn btn-primary">Add Client</button>
                         </div>
                  </div>
-           
 
                 {/* PARA EL PRODUCTO*/}
                 
@@ -44,19 +30,7 @@ const Ventas = () => {
                   <div className="card-header border-primary  fw-semibold fs-5 p-3">Products</div>
                     <div className="card-body">
                     <form>
-                    <div className="row mb-3">
-                      <label  className="col-sm-3 col-form-label ">Id Product</label>
-                        <div className="col-sm-9">
-                          <input type="numeric" className="form-control" />
-                        </div>
-                    </div>
-
-                    <div className="row mb-3 ">
-                      <label className="col-sm-3 col-form-label ">Name Product</label>
-                        <div className="col-sm-9">
-                          <input type="text" className="form-control" readOnly />
-                        </div>
-                    </div>
+                    <SearchProduct/>
                     <div className="row mb-3 ">
                       <label className="col-sm-3 col-form-label ">Amount</label>
                         <div className="col-sm-9">

@@ -3,23 +3,37 @@ import { FaTrashAlt, FaPen } from "react-icons/fa";
 import axios from 'axios';
 import {Modal , ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Proveedores from './Proveedores';
 
 
 const Productos = () => {
   
-  const baseUrl="";
+  const baseUrl="https://localhost:7071/api/Product";
   const [data, setData]= useState([]);
   const [modalInsertar, setModalInsertar] = useState(false);
   const [modalEditar, setModalEditar] = useState(false);
   const [modalEliminar, setModalEliminar] = useState(false);
   const [productoSeleccionado, setproductoSeleccionado]= useState({
     idProduct: '',
-   product_name: '',
+    product_name: '',
     description: '',
     amount: '',
     price: '',
     idProvider: ''
   });
+
+  const [dataProvedor, setDataProvedor] = useState([]);
+
+  const getListProvider = async () => {
+     try {
+      const {data} = await axios.get("https://localhost:7071/api/Provider");
+      setDataProvedor(data);
+     }catch(error) {
+      console.log(error);
+     }
+  }
+
+
 
   const handleChange= e=>{
     const {name, value}=e.target;
@@ -58,7 +72,7 @@ const Productos = () => {
       var dataAuxiliar=data;
       dataAuxiliar.map(product=>{
         if(product.idProduct===productoSeleccionado.idProduct){
-          product.providProducter_name=respuesta.providProducter_name;
+          product.product_name=respuesta.product_name;
           product.description=respuesta.description;
           product.amount=respuesta.amount;
           product.price=respuesta.price;
@@ -89,6 +103,7 @@ const Productos = () => {
 
   useEffect(()=>{
     peticionGet();
+    getListProvider();
   },[])
 
 
@@ -121,7 +136,8 @@ const Productos = () => {
                     <th scope="col">Description</th>
                     <th scope="col">Amount</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Provider</th>
+                    <th scope="col">ProviderId</th>
+                    <th ecope="col">Name Provider</th>
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -130,16 +146,17 @@ const Productos = () => {
                   {data.map(product=>(
                     <tr key={product.idProduct}>
                       <td scope="row">{product.idProduct}</td>
-                      <td>{product.providProducter_name}</td>
+                      <td>{product.product_name}</td>
                       <td>{product.description}</td>
                       <td>{product.amount}</td>
                       <td>{product.price}</td>
                       <td>{product.idProvider}</td>
+                      <td></td>
                       <td>
                       <button className="btn btn-small btn-primary me-1" onClick={()=>seleccionarproducto(product,"Editar")}>
                         <FaPen/>
                       </button>
-                      <button className="btn btn-small btn-danger" onClick={()=>abrirCerrarModalEliminar(product, "Eliminar")}>
+                      <button className="btn btn-small btn-danger" onClick={()=>seleccionarproducto(product, "Eliminar")}>
                         <FaTrashAlt />
                       </button>
                       </td>
@@ -152,30 +169,39 @@ const Productos = () => {
 <div>
             {/* MODAL INSERTAR */}
 
-<Modal isOpen={modalInsertar} backdrop={false} toggle={()=>setModalInsertar(!modalInsertar)}>
+<Modal isOpen={modalInsertar} backdrop={false} >
 <ModalHeader>New Product</ModalHeader>
 <ModalBody>
     <div className="form-group mb-3">
         <label>Name Product:</label>
-        <input type="text" className="form-control mb-3" name="providProducter_name" onChange={handleChange} value={ productoSeleccionado && productoSeleccionado.provider_name}/>
+        <input type="text" className="form-control mb-3" name="product_name" onChange={handleChange} />
         
         <label>Description:</label>
-        <input type="text" className="form-control mb-3" name="description" onChange={handleChange} value={ productoSeleccionado && productoSeleccionado.description} />
+        <input type="text" className="form-control mb-3" name="description" onChange={handleChange}  />
         
         <label>Amount:</label>
-        <input type="number" className="form-control mb-3" name="amount" onChange={handleChange} value={ productoSeleccionado && productoSeleccionado.amount}/>
+        <input type="number" className="form-control mb-3" name="amount" onChange={handleChange} min="1"  />
         
         <label>Price:</label>
-        <input type="numeric" className="form-control mb-3" name="price" onChange={handleChange} value={ productoSeleccionado && productoSeleccionado.price} />
+        <input type="numeric" className="form-control mb-3" name="price" onChange={handleChange}  />
         
-        <label>Provider:</label>
-        <input type="text" className="form-control mb-3" name="idProvider" onChange={handleChange} value={ productoSeleccionado && productoSeleccionado.idProvider} />
+        <label>idProvider:</label>
+        <input type="text" className="form-control mb-3" name="idProvider" onChange={handleChange}/>
+
+        <label>Name Provider</label>
+        <select className="form-select mb-3" aria-label=".form-select-lg example" onChange={handleChange}>
+        {dataProvedor.map(elemento=>(
+          <option key={elemento.idProvider} value={elemento.idProvider}>{elemento.provider_name}</option>
+        )
+          
+        )}
+</select>
         
        
     </div>
 </ModalBody>
 <ModalFooter>
-    <button className="btn btn-primary" onClick={()=>peticionPut()}>New</button>{" "}
+    <button className="btn btn-primary" onClick={()=>peticionPost()}>New Product</button>{" "}
     <button className="btn btn-danger" onClick={()=>abrirCerrarModalInsertar()}>Cancel</button>
 </ModalFooter>
 </Modal>
@@ -183,54 +209,54 @@ const Productos = () => {
 </div>
              
 
-
-{/* /* <Modal isOpen={modalEditar} >
+{/* MODAL Editar */}
+<Modal isOpen={modalEditar}  backdrop={false}>
 <ModalHeader>Edit Product</ModalHeader>
 <ModalBody>
     <div className="form-group">
         <label>ID Product:</label>
         <br />
-        <input type="text" className="form-control" name="idProduct" readOnly />
+        <input type="text" className="form-control" name="idProduct" readOnly value={ productoSeleccionado && productoSeleccionado.idProduct}/>
         <br />
         <label>Name Product:</label>
         <br />
-        <input type="text" className="form-control" name="product_name" onChange={handleChange} />
+        <input type="text" className="form-control" name="product_name" onChange={handleChange} value={ productoSeleccionado && productoSeleccionado.product_name} />
         <br />
         <label>Description:</label>
         <br />
-        <input type="text" className="form-control" name="description" onChange={handleChange} />
+        <input type="text" className="form-control" name="description" onChange={handleChange} value={ productoSeleccionado && productoSeleccionado.description}/>
         <br />
         <label>Amount:</label>
         <br />
-        <input type="number" className="form-control" name="amount" onChange={handleChange}/>
+        <input type="number" className="form-control" name="amount" min="1" onChange={handleChange} value={ productoSeleccionado && productoSeleccionado.amount}/>
         <br />
         <label>Price:</label>
         <br />
-        <input type="number" className="form-control" name="price" onChange={handleChange} />
+        <input type="number" className="form-control" name="price" onChange={handleChange} value={ productoSeleccionado && productoSeleccionado.price} />
         <br />
         <label>Provider:</label>
         <br />
-        <input type="text" className="form-control" name="idProvider" onChange={handleChange} />
+        <input type="text" className="form-control" name="idProvider" onChange={handleChange}  value={ productoSeleccionado && productoSeleccionado.idProvider}  />
        
     </div>
 </ModalBody>
 <ModalFooter>
-    <button className="btn btn-primary" onClick={()=>peticionPost()}>Edit</button>{" "}
+    <button className="btn btn-primary" onClick={()=>peticionPut()}>Edit</button>{" "}
     <button className="btn btn-danger" onClick={()=>abrirCerrarModalEditar()}>Cancel</button>
 </ModalFooter>
-</Modal> */}
+</Modal> 
 
 
 {/* MODAL Eliminar */}
-{/* <Modal isOpen={modalEliminar} >
+<Modal isOpen={modalEliminar}  backdrop={false}>
         <ModalBody>
-            Are you sure you want to delete the product {productoSeleccionado && productoSeleccionado. product_name} ?
+            Are you sure you want to delete the selected Customer "{productoSeleccionado && productoSeleccionado. product_name}"?
         </ModalBody>
         <ModalFooter>
             <button className="btn btn-danger" onClick={()=>peticionDelete()}>Yes</button>
             <button className="btn btn-secondary" onClick={()=>abrirCerrarModalEliminar()}>No</button>
         </ModalFooter>
-    </Modal>  */} 
+    </Modal> 
              
         </div>
     </div>    

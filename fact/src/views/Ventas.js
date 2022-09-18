@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaTrashAlt} from "react-icons/fa";
 import SearchCliente from "../components/SearchCliente";
 import SearchProduct from "../components/SearchProduct";
+import '../style/tableSale.css'
 
 const Ventas = () => {
   return (
@@ -55,6 +56,14 @@ const Ventas = () => {
                 <div className="card border-primary">
                   <div className="card-header border-primary  fw-semibold fs-5">Sale</div>
                     <div className="card-body">
+
+                    <div className="row mb-2 border-primary">
+                      <label className="col-sm-2 col-form-label  fw-normal fs-5">Customer</label>
+                        <div className="col-sm-10">
+                          <input type="text" className="form-control" readOnly/>
+                        </div>
+                    </div >
+                    
 
                     <table className="table table table-striped table-hover">
                      <thead>

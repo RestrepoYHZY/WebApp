@@ -4,6 +4,7 @@ import axios from 'axios';
 import {Modal , ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Proveedores from './Proveedores';
+import '../style/tables.css'
 
 
 const Productos = () => {
@@ -56,6 +57,8 @@ const Productos = () => {
 
   const peticionPost=async()=>{
     delete productoSeleccionado.idProduct;
+    productoSeleccionado.amount=parseInt(productoSeleccionado.amount);
+    productoSeleccionado.price=parseFloat(productoSeleccionado.price);//Para que quedo double?
     await axios.post(baseUrl, productoSeleccionado)
     .then(response=>{
       setData(data.concat(response.data));
@@ -145,14 +148,14 @@ const Productos = () => {
                 <tbody>
                   {data.map(product=>(
                     <tr key={product.idProduct}>
-                      <td scope="row">{product.idProduct}</td>
-                      <td>{product.product_name}</td>
-                      <td>{product.description}</td>
-                      <td>{product.amount}</td>
-                      <td>{product.price}</td>
-                      <td>{product.idProvider}</td>
-                      <td></td>
-                      <td>
+                      <td data-label="Id Product"scope="row">{product.idProduct}</td>
+                      <td data-label="Product">{product.product_name}</td>
+                      <td data-label="Description">{product.description}</td>
+                      <td data-label="Amount">{product.amount}</td>
+                      <td data-label="Price">{product.price}</td>
+                      <td data-label="Id Provider">{product.idProvider}</td>
+                      <td data-label="Name Provider"></td>
+                      <td data-label="Action">
                       <button className="btn btn-small btn-primary me-1" onClick={()=>seleccionarproducto(product,"Editar")}>
                         <FaPen/>
                       </button>

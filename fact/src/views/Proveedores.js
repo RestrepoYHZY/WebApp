@@ -3,7 +3,7 @@ import { FaTrashAlt, FaPen } from "react-icons/fa";
 import axios from 'axios';
 import {Modal , ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import '../style/tables.css'
 
 const Proveedores = () => {
   
@@ -113,8 +113,8 @@ console.table(response.data);
     <div className="card border-primary">
       <div className='card-header  border-primary  fw-semibold fs-5'> Providers </div>
         <div className="card-body">
-       <button onClick={()=>abrirCerrarModalInsertar()} className="btn btn-small btn-primary  mb-3 ">New Provider</button>
-           <table className="table table table-striped table-hover">
+       <button onClick={()=>abrirCerrarModalInsertar()} className="btn btn-small btn-primary  mb-3 btnNew">New Provider</button>
+           <table className="table table table-striped table-hover ">
              <thead>
                 <tr>
                    <th scope="col">Id Provider</th>
@@ -129,13 +129,13 @@ console.table(response.data);
                 <tbody>
                   {data.map(provider=>(
                     <tr key={provider.idProvider}>
-                      <td scope="row">{provider.idProvider}</td>
-                      <td>{provider.provider_name}</td>
-                      <td>{provider.nit}</td>
-                      <td>{provider.phone}</td>
-                      <td>{provider.address}</td>
-                      <td>
-                      <button className="btn btn-small btn-primary me-1" onClick={()=>seleccionarproveedor(provider,"Editar")}>
+                      <td data-label="Id Provider" scope="row">{provider.idProvider}</td>
+                      <td data-label="Name Provider" >{provider.provider_name}</td>
+                      <td data-label="Nit" >{provider.nit}</td>
+                      <td data-label="Phone Number" >{provider.phone}</td>
+                      <td data-label="Addres" >{provider.address}</td>
+                      <td data-label="Action">
+                      <button className="btn btn-small btn-primary me-1 btnOne" onClick={()=>seleccionarproveedor(provider,"Editar")}>
                         <FaPen/>
                       </button>
                       <button className="btn btn-small btn-danger" onClick={()=>seleccionarproveedor(provider,"eliminar")}>

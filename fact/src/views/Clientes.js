@@ -3,9 +3,10 @@ import { FaTrashAlt, FaPen } from "react-icons/fa";
 import axios from 'axios';
 import {Modal , ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../style/tables.css'
 
 const Clientes = () => {
- const Url = "  https://localhost:7071/api/Customer";
+const Url = " https://localhost:7071/api/Customer";
 const [data, setData]=useState([]);
 const [modalInsertar, setModalInsertar]=useState(false);
 const [modalEliminar , setModalEliminar]=useState(false);
@@ -75,9 +76,7 @@ const peticionPut = async ()=>{
               Customer.surname = respuesta.surname;
               Customer.document = respuesta.document;
               Customer.phoneNumber = respuesta.phoneNumber;
-              Customer.mail = respuesta.mail;
-              
-              
+              Customer.mail = respuesta.mail; 
           }
       });
       abrirCerrarModalEditar();
@@ -96,6 +95,7 @@ const peticionPut = async ()=>{
       console.log(error);
     })
   }
+  
 const seleccionarCustomer=(Customer, caso)=>{
     setcustomerSeleccionado(Customer);
     (caso === "Editar")?
@@ -105,7 +105,7 @@ const seleccionarCustomer=(Customer, caso)=>{
 
 useEffect(()=>{
     peticionGet();
-},[])
+},[]);
 
     return(
       <div className="container col-12 mt-5">
@@ -130,14 +130,14 @@ useEffect(()=>{
                     <tbody>
                     {data.map(Customer=>(
                      <tr key={Customer.idCustomer}>
-                         <td>{Customer.idCustomer}</td>
-                         <td>{Customer.name}</td>
-                         <td>{Customer.surname}</td>
-                         <td>{Customer.document}</td>
-                         <td>{Customer.phoneNumber}</td>
-                         <td>{Customer.mail}</td>
-                          <td>
-                          <button className="btn btn-small btn-primary me-1" onClick={()=>seleccionarCustomer(Customer,"Editar")}>
+                         <td data-label="Id Customer">{Customer.idCustomer}</td>
+                         <td data-label="Name">{Customer.name}</td>
+                         <td data-label="Surname">{Customer.surname}</td>
+                         <td data-label="Document">{Customer.document}</td>
+                         <td data-label="Phone Number">{Customer.phoneNumber}</td>
+                         <td data-label="Mail">{Customer.mail}</td>
+                          <td data-label="Action">
+                          <button className="btn btn-small btn-primary me-1 btnOne" onClick={()=>seleccionarCustomer(Customer,"Editar")}>
                             <FaPen/>
                           </button>
                           <button className="btn btn-small btn-danger" onClick={()=>seleccionarCustomer(Customer, "Eliminar")}>

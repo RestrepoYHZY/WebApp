@@ -32,12 +32,6 @@ const Ventas = () => {
                     <div className="card-body">
                     <form>
                     <SearchProduct/>
-                    <div className="row mb-3 ">
-                      <label className="col-sm-3 col-form-label ">Amount</label>
-                        <div className="col-sm-9">
-                          <input type="number" className="form-control" min="1" />
-                        </div>
-                    </div>
 
                     </form>
 
@@ -89,19 +83,31 @@ const Ventas = () => {
                       <td></td>
                       <td>
                           
-                        <button className="btn btn-danger me-1" >
+                        {/* <button className="btn btn-danger me-1" >
                            <FaTrashAlt />
-                       </button>
+                       </button> */}
+                       <button class="btn btn-info btn-sm m-1">+</button>
+                      <button class="btn btn-danger btn-sm">-</button>
                      </td>
                    </tr>
+                   </tbody>
            
            {/* PARA EL MONTO tOTAL*/}
+           <tfoot>
             <tr>
-                <td colspan="5"></td>
-                <td> Total</td>
-                <td> 200000</td>
+            <th scope="row" colspan="3">Total Products</th>
+        
+        
+        <td>10</td>
+        <td class="font-weight-bold" colspan="2">$ <span>5000</span></td>
+        <td>
+            <button class="btn btn-danger btn-sm" id="vaciar-carrito">
+                vaciar todo
+            </button>
+        </td>
           </tr>
-                   </tbody>
+          </tfoot>
+                   
                  </table>
                         
                         

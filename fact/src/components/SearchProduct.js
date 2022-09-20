@@ -60,6 +60,7 @@ peticionGet();
                        <th scope="col">id Product</th>
                         <th scope="col">Name Product</th>
                         <th scope="col">Amount</th>
+                        <th></th>
 
                       </tr>
          </thead>
@@ -70,6 +71,9 @@ peticionGet();
             <td>{users.idProduct}</td>
             <td>{users.product_name}</td>
             <td>{users.amount}</td>
+            <td>
+              <button className='btn btn-primary'>Add</button>
+            </td>
            </tr> 
             ))}
          </tbody>

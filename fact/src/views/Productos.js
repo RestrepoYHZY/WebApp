@@ -24,7 +24,7 @@ const Productos = () => {
   });
 
   const [dataProvedor, setDataProvedor] = useState([]);
-
+  
   const getListProvider = async () => {
      try {
       const {data} = await axios.get("https://localhost:7071/api/Provider");
@@ -32,6 +32,11 @@ const Productos = () => {
      }catch(error) {
       console.log(error);
      }
+  }
+
+  const handleChangeProvider = event =>{
+    console.log(event.target.value);
+    setDataProvedor(event.target.value);
   }
 
 
@@ -152,7 +157,7 @@ const Productos = () => {
                       <td data-label="Product">{product.product_name}</td>
                       <td data-label="Description">{product.description}</td>
                       <td data-label="Amount">{product.amount}</td>
-                      <td data-label="Price">{product.price}</td>
+                      <td data-label="Price">$ {product.price}</td>
                       <td data-label="Id Provider">{product.idProvider}</td>
                       <td data-label="Name Provider"></td>
                       <td data-label="Action">
@@ -192,7 +197,7 @@ const Productos = () => {
         <input type="text" className="form-control mb-3" name="idProvider" onChange={handleChange}/>
 
         <label>Name Provider</label>
-        <select className="form-select mb-3" aria-label=".form-select-lg example" onChange={handleChange}>
+        <select className="form-select mb-3" aria-label=".form-select-lg example" onChange={handleChangeProvider}>
         {dataProvedor.map(elemento=>(
           <option key={elemento.idProvider} value={elemento.idProvider}>{elemento.provider_name}</option>
         )

@@ -9,7 +9,7 @@ import '../style/tables.css'
 
 const Productos = () => {
   
-  const baseUrl="https://localhost:7071/api/Product";
+  const baseUrl="https://localhost:7071/api/Product/getProduct";
   const [data, setData]= useState([]);
   const [modalInsertar, setModalInsertar] = useState(false);
   const [modalEditar, setModalEditar] = useState(false);

@@ -15,10 +15,17 @@ usa lenguajes como Javascript con ReactJS de Frontend Side usando Bootstrap CSS 
 Al Terminar estos pasos finalmente podrá visualizar el proyecto. 
 
 # Arquitectura Usada
+• Dotnet Core como framework. • Microsoft SQL Server como motor de base de datos • ReactJs para el Frontend. • la Web API puede ser consumida con Swagger.
+- ReactJs para el Frontend.
+-
 
 # Requisitos Técnicos 
 Para el correcto funcionamiento del proyecto debe asegurarse de tener instalados los siguientes programas:
 
+- SQL Server. 
+- Donet Core.
+- Visual Studio Code.
+- Vistual Studio
 
 
 # Project status

@@ -1,6 +1,6 @@
 # Online-Store-App  
-# Demo-Preview
-# Description 📝
+# Demo-Preview 📷
+# Description 📜
 Este es un proyecto práctico el cual se pretente implementar la gestión de clientes, productos, proveedores y una factura para una tienda. El aplicativo
 usa lenguajes como Javascript con ReactJS de Frontend Side usando Bootstrap CSS y C# de Backend Side.
 
@@ -14,12 +14,12 @@ usa lenguajes como Javascript con ReactJS de Frontend Side usando Bootstrap CSS 
 
 Al Terminar estos pasos finalmente podrá visualizar el proyecto. 
 
-# Arquitectura Usada
+# Arquitectura Usada 🔧
 • Dotnet Core como framework. • Microsoft SQL Server como motor de base de datos • ReactJs para el Frontend. • la Web API puede ser consumida con Swagger.
 - ReactJs para el Frontend.
 -
 
-# Requisitos Técnicos 
+# Requisitos Técnicos 📝
 Para el correcto funcionamiento del proyecto debe asegurarse de tener instalados los siguientes programas:
 
 - SQL Server. 
@@ -28,8 +28,8 @@ Para el correcto funcionamiento del proyecto debe asegurarse de tener instalados
 - Vistual Studio
 
 
-# Project status
-# Mapa Vial (Proyeccion)
+# Project status 🔍
+# Mapa Vial (Proyeccion) 💡
 
 # Developers 👨‍💻
 - [Karen Chica](https://github.com/chicakaren) en el Frontend
